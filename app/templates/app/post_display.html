@@ -1,0 +1,331 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<header>
+    <div class="container container-fluid">
+      <div class="logo">
+        <h2>BLOG</h2>
+      </div>
+      <div class="links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="#">Blog</a>
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="border:none;width: 90px;">
+            Settings
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="{% url 'profile-user' %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'create-post' %}">Post</a></li>
+            <li><a class="dropdown-item" href="{% url 'notification' %}">Notifications</a></li>
+            <li><a class="dropdown-item" href="{% url 'password-change' %}">Change Password</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="action-btn">
+        {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}">
+          <button class="btn btn-scoundary">Logout</button></a>
+        {% else %}
+          <a href="{% url 'login' %}">
+          <button class="btn btn-scoundary">Login</button></a>
+          <a href="{% url 'register' %}">
+          <button class="btn btn-primary">Sign Up</button></a>
+          <i class="uil uil-align-center-alt menu" onclick="menu()"></i>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+    
+    
+    
+    
+    {% comment %} END OF THE NAVBAR {% endcomment %}
+
+    
+    <main>
+        <div class="container">
+          <div class="layout">
+            <!-- left layout -->
+            <div class="left">
+              <div class="page-top">
+                <div class="top flex">
+                  <div class="page-name">
+                    <a href="{{request.META.HTTP_REFERER}}" class="learn">
+                      <span class="material-icons"> keyboard_return </span> Go
+                      back
+                    </a>
+                    <h1>Blog</h1>
+                  </div>
+                </div>
+              </div>
+  
+              <center>
+                <div class="typo">
+                  <h1 class="title blog-title">
+                    {{Post.title}}
+                  </h1>
+                  <div class="timeline">
+                    <div class="track">
+                      <i class="uil uil-clock"></i>
+                      <p class="time">{{post.created_at | timesince}} ago</p>
+                    </div>
+                    <div class="track">
+                      <i class="uil uil-users-alt"></i>
+                      <p class="view-count">{{post.num_view}}</p>
+                    </div>
+                    <div class="track">
+                      <form action="" method="POST">
+                        <button type="submit" class="btn btn-info">
+                          <i class="uil uil-bookmark-full"></i>
+                          <p class="bookmark">Bookmark</p>
+                          <!-- REMOVE BOOKMARK
+                            <i class="fa-solid fa-bookmark"></i> -->
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </center>
+              <section class="mt">
+                <div class="container">
+                  <!-- blog post -->
+                  <div class="blog-post">
+                    <div class="post-img blog-img">
+                      <img src="{{post.image.url}}" alt="{{post.title}}" />
+                    </div>
+                    <div class="blog-post-content">
+                      {{post.description|safe}}
+                      
+                      </p>
+                      <div class="blog-tags">
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                        <div class="tag">Tag content</div>
+                      </div>
+                      <div class="social-share">
+                        <div class="reactions">
+                          <div class="likes">
+                            <i class="uil uil-heart"></i> <span>200</span>
+                          </div>
+                          <div class="total-comments">
+                            <i class="uil uil-comment-alt"></i>
+                            <span>10</span>
+                          </div>
+                        </div>
+                        <div class="share">
+                          <div class="social">
+                            <a href="#">
+                              <i class="fa-brands fa-facebook-f"></i>
+                            </a>
+                            <a href="#">
+                              <i class="fa-brands fa-instagram"></i>
+                            </a>
+                            <a href="#">
+                              <i class="fa-brands fa-linkedin-in"></i>
+                            </a>
+                            <a href="#">
+                              <i class="fa-brands fa-twitter"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- COMMENTS -->
+                      {% for comment in spec_comment %}
+                      <div class="user-comment">
+                        <div class="author">
+                          <div class="profile-pic">
+                            <img src="../images/author.svg" alt="" />
+                          </div>
+                          <div class="details">
+                            <p>{{comment.user}}</p>
+                            <small>June 20, 2022</small>
+                          </div>
+                        </div>
+                        <div class="comment-sec-main">
+                          <div class="comment-sec">
+                            <div class="comment">
+                              <p>
+                               {{comment.body}}
+                              </p>
+                            </div>
+                            {% comment %} COMMENT FORM {% endcomment %}
+                            {% endfor %}
+  
+                          </div>
+                          
+                          
+                      
+                     
+                  
+                  <div class="comment-box">
+                    <h3>Leave a new comment to this post</h3>
+                    <p>
+                      Your email address will not be published. Required fields
+                      are marked<span>*</span>
+                    </p>
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                     {{comment}}
+                      <button class="btn btn-primary rounded">
+                        Post comment
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </section>
+            </div>
+            <!-- left layout end -->
+  
+            <!-- right layout -->
+            <div class="right">
+              <div class="block">
+                <h2 class="title2">Most recent</h2>
+                {% for recentpost in recent_blog  %}
+                    <div class="recent-post">
+                    <div class="rounded-img">
+                        <img src="{{recentpost.image.url}}" alt="" />
+                    </div>
+                    <div class="recent-content">
+                        <h3>
+                        {{recentpost.title}}
+                        </h3>
+                        <a class="learn" href="{% url 'post-display' recentpost.id %}">Learn more
+                        <span class="material-icons"> trending_flat </span>
+                        </a>
+                    </div>
+                    </div>
+                {% endfor %}
+                
+              </div>
+  
+              <div class="block r-blog">
+                <h2 class="title2">Related Blogs</h2>
+                <!-- card -->
+                <a href="#">
+                  <div class="card">
+                    <div class="post-img">
+                      <img src="../images/post.png" alt="" />
+                      <div class="tag">Tag name</div>
+                    </div>
+                    <div class="card-content">
+                      <h3>
+                        A blog title and other stuffs will add here, also we can
+                        include.
+                      </h3>
+                      <div class="author">
+                        <div class="profile-pic">
+                          <img src="../images/author.svg" alt="" />
+                        </div>
+                        <div class="details">
+                          <p>Author name</p>
+                          <small>June 20, 2022</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <!-- card end-->
+  
+                <!-- card -->
+                <a href="#">
+                  <div class="card">
+                    <div class="post-img">
+                      <img src="../images/post.png" alt="" />
+                      <div class="tag">Tag name</div>
+                    </div>
+                    <div class="card-content">
+                      <h3>
+                        A blog title and other stuffs will add here, also we can
+                        include.
+                      </h3>
+                      <div class="author">
+                        <div class="profile-pic">
+                          <img src="../images/author.svg" alt="" />
+                        </div>
+                        <div class="details">
+                          <p>Author name</p>
+                          <small>June 20, 2022</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+                <!-- card end-->
+              </div>
+              <div class="block">
+                <h2 class="title2">Top category</h2>
+                <div class="card">
+                  <h3>
+                    A blog title and other stuffs will add here, lso we can
+                    incluse.
+                  </h3>
+                  <p>
+                    Lorem ipsum began as scrambled, nonsensical Latin derived from
+                    Cicero's 1st-century BC text De Finibus Bonorum et Malorum.
+                  </p>
+                  <a class="learn" href="#"
+                    >Learn more
+                    <span class="material-icons"> trending_flat </span></a
+                  >
+                </div>
+                <div class="card">
+                  <h3>
+                    A blog title and other stuffs will add here, lso we can
+                    incluse.
+                  </h3>
+                  <p>
+                    Lorem ipsum began as scrambled, nonsensical Latin derived from
+                    Cicero's 1st-century BC text De Finibus Bonorum et Malorum.
+                  </p>
+                  <a class="learn" href="#"
+                    >Learn more
+                    <span class="material-icons"> trending_flat </span></a
+                  >
+                </div>
+                <div class="card">
+                  <h3>
+                    A blog title and other stuffs will add here, lso we can
+                    incluse.
+                  </h3>
+                  <p>
+                    Lorem ipsum began as scrambled, nonsensical Latin derived from
+                    Cicero's 1st-century BC text De Finibus Bonorum et Malorum.
+                  </p>
+                  <a class="learn" href="#"
+                    >Learn more
+                    <span class="material-icons"> trending_flat </span></a
+                  >
+                </div>
+              </div>
+              <div class="block">
+                <h2 class="title2">Top Tags</h2>
+                <div class="blog-tags">
+                  <div class="tag">Tag</div>
+                  <div class="tag">Tag content</div>
+                  <div class="tag">Tag</div>
+                  <div class="tag">Tag content</div>
+                  <div class="tag">Tag content</div>
+                  <div class="tag">Tag</div>
+                  <div class="tag">Tag content</div>
+                  <div class="tag">Tag content</div>
+                  <div class="tag">Tag</div>
+                  <div class="tag">Tag content</div>
+                  <div class="tag">Tag</div>
+                </div>
+              </div>
+            </div>
+            <!-- right layout end -->
+          </div>
+        </div>
+      </main>
+   
+{% endblock content %}

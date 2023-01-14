@@ -1,0 +1,147 @@
+{% extends 'main.html' %}
+
+{% block content %}
+{% comment %} dropdown not working when include don't know why {% endcomment %}
+{% comment %} {% include 'app/navbar.html' %} {% endcomment %}
+{% comment %} HEADER {% endcomment %}
+<header>
+  <div class="container container-fluid">
+    <div class="logo">
+      <h2>BLOG</h2>
+    </div>
+    <div class="links">
+      <a href="{% url 'home' %}">Home</a>
+      <a href="#">Blog</a>
+      <div class="dropdown">
+        <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="border:none;width: 90px;">
+          Settings
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+          <li><a class="dropdown-item" href="{% url 'profile-user' %}">Profile</a></li>
+          <li><a class="dropdown-item" href="{% url 'create-post' %}">Post</a></li>
+          <li><a class="dropdown-item" href="{% url 'notification' %}">Notifications</a></li>
+          <li><a class="dropdown-item" href="{% url 'password-change' %}">Change Password</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="action-btn">
+      {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">
+        <button class="btn btn-scoundary">Logout</button></a>
+      {% else %}
+        <a href="{% url 'login' %}">
+        <button class="btn btn-scoundary">Login</button></a>
+        <a href="{% url 'register' %}">
+        <button class="btn btn-primary">Sign Up</button></a>
+        <i class="uil uil-align-center-alt menu" onclick="menu()"></i>
+      {% endif %}
+    </div>
+  </div>
+</header>
+{% comment %} END OF THE HEADER {% endcomment %}
+
+{% for prof in profs %}
+<section class="" style="margin-top: 10em">
+    <div class="container" style="width: 100%;">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="">
+          <div class="">
+            <div class="rounded-top d-flex flex-row" style="height:200px;">
+              <div class="ms-4 mt-5 d-flex flex-column" style="width: 200px;">
+                <img src="{{prof.image.url}}" alt={{prof.socialname}} class="img-fluid mt-4 mb-2"
+                  style="width: 200px; z-index: 1">
+                <a href="{% url 'profile-edit' %}" class="btn btn-outline-dark" data-mdb-ripple-color="dark"
+                  style="z-index: 1; margin-top: 20px">
+                  Edit profile
+                </a>
+              </div>
+              <div class="ms-3" style="margin-top: 130px;">
+                <h5 style="font-size:2em;">Hello {{user.username}}!</h5>
+                <p style="font-size:2em;">{{prof.description}}</p>
+              </div>
+            </div>
+            <div class="p-4 text-black" style="background-color: #f8f9fa; margin-top:50px">
+              <div class="d-flex justify-content-end text-center py-1">
+                <div style="margin-right: 2em;">
+                  <p class="mb-1 h5 w-5" style="font-size:2em;">{{post_count}}</p>
+                  <p class="small text-muted mb-0" style="font-size:2em;">Post</p>
+                </div>
+                <div class="px-3">
+                  <p class="mb-1 h5" style="font-size:2em;">{{comment_count}}</p>
+                  <p class="small text-muted mb-0" style="font-size:2em;">Comment</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+    <div>
+        {% comment %} {% for post in posts %} {% endcomment %}
+            {% comment %} <img src="{{post.image.url}}" alt="{{post.title}}" style="width: 100px;"/>
+            <h4>{{post.title}}</h4>
+            <p>{{post.description | truncatechars:100}}</p>
+            <span>{{post.created_at | timesince}} ago</span>
+            <img src="https://yt3.ggpht.com/a/AGF-l7-0J1G0Ue0mcZMw-99kMeVuBmRxiPjyvIYONg=s900-c-k-c0xffffffff-no-rj-mo" alt="user" style="width: 100px;" />
+            <span>{{post.author}}</span>
+            <a href="{% url 'post-edit' post.id %}">Edit</a>
+            <a href="{% url 'post-delete' post.id %}">Delete</a> {% endcomment %}
+
+          
+
+              <section class="sp">
+                <div class="container">
+                  <h1 class="sec-title">My blogs</h1>
+                  <div class="grid-3">      
+                    <!-- card -->
+                    {% for post in posts %}
+                    <a href="#">
+                        <div class="card">
+                          <div class="post-img">
+                            <img src="{{post.image.url}}" alt="{{post.title}}"/>
+                            <div class="tag">Tag name</div>
+                          </div>
+                          <div class="card-content">
+                            <h3>
+                              {{post.title}}
+                            </h3>
+                            <div class="author">
+                              <div class="profile-pic">
+                                <img src="images/author.svg" alt="" />
+                              </div>
+                              <div class="details">
+                                <p>{{post.author}}</p>
+                                <small>{{post.created_at | timesince}} ago</small>
+                              </div>
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </a>
+                    {% endfor %}
+                    <!-- card end-->
+                  </div>
+                 
+        
+        
+    </div>
+</div>
+{% comment %} to enter data if there is none for profile {% endcomment %}
+{% empty %}
+<form method='POST' enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type='submit'>Submit</button>
+</form>
+
+{% endfor %}
+
+{% comment %} TEST FOR PROFILE {% endcomment %}
+
+
+
+
+{% endblock content %}

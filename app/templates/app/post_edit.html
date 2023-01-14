@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+
+{% block content %}
+    {% comment %} <form method='POST' enctype='multipart/form-data'>
+        {% csrf_token %}
+        {{form_edit.as_p}}
+        <a href='{% url 'home' %}'>Back</a>
+        <button type='submit'>Submit</button>
+    </form> {% endcomment %}
+
+    {% comment %} this is ... {% endcomment %}
+    <main>
+        <div class="container">
+          <div class="page-name">
+            <h1>Fill your profile</h1>
+          </div>
+  
+          <form method="POST" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            <center>
+              <div class="inputs">
+                <div>
+                  <div class="search-bar s-active input">
+                    {{form_edit}}
+                  </div>
+                </div>
+                <button class="btn btn-primary rounded">
+                  SUBMIT <span class="material-icons"> arrow_right_alt </span>
+                </button>
+               
+              </div>
+            </center>
+          </form>
+        </div>
+      </main>
+{% endblock content %}

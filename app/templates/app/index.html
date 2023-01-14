@@ -1,0 +1,138 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+{% include 'app/navbar.html' %}
+<main class="sp">
+    <div class="container">
+      <center>
+        <div class="search-bar">
+          {% comment %} <input type="text" placeholder="Search" /> {% endcomment %}
+          <div class="animated-search" onclick="searchbar()">
+            <i class="uil uil-search"></i>
+          </div>
+        </div>
+        <div class="typo">
+          <h1 class="title">Hello {{user.username}} We are WeBlog</h1>
+          <p>
+            WeBlog was created for people who want to become blogger to share their experiences with others
+            people it can be traveling experiences, or any favorite topics. 
+          </p>
+        </div>
+      </center>
+    </div>
+  </main>
+  <section class="sp">
+    {% for post in post_datas %}
+    {% if post.is_featured %}
+    <div class="container">
+      <div class="grid-2">
+        <div class="post-img">
+          <img src="{{post.image.url}}" alt="" />
+        </div>
+        
+        <div class="post-content">
+          <div class="cetagory">
+            <p>Category name</p>
+          </div>
+          <h1>
+            {{post.title}}
+          </h1>
+          <p class="des">
+            {{post.description}}
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iure
+            ullam animi repellat non ut delectus culpa! Iste quia corporis
+            illum doloribus facilis quo totam eveniet sapiente odit
+            cupiditate? Cumque, nam?
+          </p>
+          <a class="learn" href="#"
+            >Learn more <span class="material-icons"> trending_flat </span></a
+          >
+        </div>
+        
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </section>
+  <section class="sp">
+    <div class="container">
+      <h1 class="sec-title">Top blogs</h1>
+      <div class="grid-3">      
+        <!-- card -->
+        {% for topPost in topPosts %}
+        <a href="{% url 'post-display' topPost.id %}">
+          <div class="card">
+            <div class="post-img">
+              <img src="{{topPost.image.url}}" alt="{{topPost.title}}" />
+              <div class="tag">Tag name</div>
+            </div>
+            <div class="card-content">
+              <h3>
+                {{topPost.title}}
+              </h3>
+              <div class="author">
+                <div class="profile-pic">
+                  <img src="images/author.svg" alt="" />
+                </div>
+                <div class="details">
+                  <p>{{topPost.author}}</p>
+                  <small>{{topPost.created_at | timesince}} ago</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+        <!-- card end-->
+      </div>
+      <center>
+        <a href=""><button class="btn btn-primary rounded view">
+          View more <span class="material-icons"> trending_flat </span>
+        </button></a>
+      </center>
+    </div>
+  </section>
+  <section class="sp">
+    <div class="container">
+      <h1 class="sec-title">New blogs</h1>
+      <div class="grid-3">
+        <!-- card -->
+        {% for newpost in newPosts %}
+        <a href="{% url 'post-display' newpost.id %}">
+          <div class="card">
+            <div class="post-img">
+              <img src="{{newpost.image.url}}" alt="{{newpost.title}}" />
+              <div class="tag">Tag name</div>
+            </div>
+            <div class="card-content">
+              <h3>
+                {{newpost.title}}
+              </h3>
+              <div class="author">
+                <div class="profile-pic">
+                  <img src="images/author.svg" alt="" />
+                </div>
+                <div class="details">
+                  <p>{{newpost.author}}</p>
+                  <small>{{newpost.created_at | timesince}}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </a>
+        {% endfor %}
+
+        <!-- card end-->
+      </div>
+      <center>
+        <a href=""><button class="btn btn-primary rounded view">
+          View more <span class="material-icons"> trending_flat </span>
+        </button></a>
+      </center>
+    </div>
+  </section>
+
+       
+    {% include 'app/footer.html' %}
+{% endblock content %}

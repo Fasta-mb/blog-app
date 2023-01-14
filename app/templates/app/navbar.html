@@ -1,0 +1,95 @@
+{% extends 'main.html' %}
+{% comment %} <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'home' %}">WeBlog</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-lg-0">
+          <li class="nav-item nav-all me-3">
+            <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item nav-all me-3">
+            <a class="nav-link" href="{% url 'create-post' %}">Post</a>
+          </li>
+          
+          <li class="nav-item nav-all">
+            {% if prof.author %}
+            <a class="dropdown-item" href="{% url 'profile-user' %}"><img class="nav-link" src="{{prof.image.url}}" alt="{{prof.socialname}}" 
+            style="width:3em;border-radius:100%"/></a>
+            {% else %}
+            <a class="nav-link" href="{% url 'profile-user' %}">profile</a>
+            {% endif %}
+          </li>      
+          <li class="nav-item dropdown nav-all">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li class="dropdown-item">
+                {% if user.is_authenticated %}
+                    <a href="{% url 'logout' %}" class="nav-link text-dark">Logout</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="nav-link text-dark">Login</a>
+                {% endif %}
+              </li>
+              <li class="nav-item nav-all me-3">
+                <a class="dropdown-item" href="{% url 'password-change' %}">Change Password</a>
+              </li>   
+            </ul>
+          </li>
+          <li class="nav-item nav-all me-3">
+            <a class="nav-link" href="{% url 'notification' %}">notifications</a>
+          </li> 
+        </ul>
+        <form class="d-flex" method="GET" action={% url 'home' %}>
+          <input class="form-control me-2" type="text" placeholder="Search" name="q" value="{{q}}">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav> {% endcomment %}
+
+  
+
+  {% block content %}
+
+  <header>
+    <div class="container container-fluid">
+      <div class="logo">
+        <h2>BLOG</h2>
+      </div>
+      <div class="links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="#">Blog</a>
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="border:none;width: 90px;">
+            Settings
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            <li><a class="dropdown-item" href="{% url 'profile-user' %}">Profile</a></li>
+            <li><a class="dropdown-item" href="{% url 'create-post' %}">Post</a></li>
+            <li><a class="dropdown-item" href="{% url 'notification' %}">Notifications</a></li>
+            <li><a class="dropdown-item" href="{% url 'password-change' %}">Change Password</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="action-btn">
+        {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}">
+          <button class="btn btn-scoundary">Logout</button></a>
+        {% else %}
+          <a href="{% url 'login' %}">
+          <button class="btn btn-scoundary">Login</button></a>
+          <a href="{% url 'register' %}">
+          <button class="btn btn-primary">Sign Up</button></a>
+          <i class="uil uil-align-center-alt menu" onclick="menu()"></i>
+        {% endif %}
+      </div>
+    </div>
+  </header>
+
+  {% endblock content %}
+
+  

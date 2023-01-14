@@ -1,0 +1,114 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+
+    {% comment %} <form method="POST">
+        {% csrf_token %}
+        <div class="register--container">
+            
+            <h2>Register to get full access<h2>
+            <div class="register--input--label">
+                
+                <label for="{{form.username.label}}">{{form.username.label}}:</label>
+                {{form.username}}
+            </div>
+
+            <div class="register--input--label">
+                <label for="{{form.password1.label}}">{{form.password1.label}}:</label>
+                {{form.password1}}
+            </div>
+
+            <div class="register--input--label">
+                <label for="{{form.password2.label}}">{{form.password2.label}}:</label>
+                {{form.password2}}
+                {% if form.errors %}
+                <span class="register--error">{{form.error_messages.password_mismatch}}</span>
+                {% endif %}
+            </div> {% endcomment %}
+        
+            {% comment %} {{form.as_p}} {% endcomment %}
+            {% comment %} <button type="submit" class="btn--register">Register</button>
+            <p>have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </form> {% endcomment %}
+
+    <main>
+        <div class="container">
+          <div class="page-name">
+            <a href="{{request.META.HTTP_REFERER}}" class="learn">
+              <span class="material-icons"> keyboard_return </span> Go back
+            </a>
+            <h1>Sign Up</h1>
+          </div>
+  
+          <form method="POST" class="form">
+            {% csrf_token %}
+            <center>
+              <div class="logo f-logo">
+                <i class="fa-brands fa-blogger"></i>
+              </div>
+              <div class="inputs">
+                <div>
+                  <div class="search-bar s-active input">
+                    {{form.username}}
+                    <div class="animated-search">
+                      <i class="uil uil-user"></i>
+                    </div>
+                  </div>
+                  {% comment %} <div class="field-error">
+                    <p>Username already taken. Please try another one.</p>
+                  </div> {% endcomment %}
+                </div>
+  
+                {% comment %} <div>
+                  <div class="search-bar s-active input">
+                    <input type="email" placeholder="Email" />
+                    <div class="animated-search">
+                      <i class="uil uil-envelope-alt"></i>
+                    </div>
+                  </div> {% endcomment %}
+  
+                  {% comment %} <div class="field-error">
+                    <p>Enter a valid email address</p>
+                  </div>
+                </div> {% endcomment %}
+  
+                <div>
+                  <div class="search-bar s-active input">
+                    {{form.password1}}
+                    <div class="animated-search">
+                      <i class="uil uil-key-skeleton"></i>
+                    </div>
+                  </div>
+                  {% if form.errors %}
+                  <div class="field-error">
+                    <p>
+                        {{form.error_messages.password_mismatch}}
+                    </p>
+                </div>
+                {% endif %}
+                </div>
+                <div>
+                  <div class="search-bar s-active input">
+                    {{form.password2}}
+                    <div class="animated-search">
+                      <i class="uil uil-key-skeleton"></i>
+                    </div>
+                  </div>
+                </div>
+                <button class="btn btn-primary rounded">
+                  SIGN UP <span class="material-icons"> arrow_right_alt </span>
+                </button>
+                <center>
+                  <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+                </center>
+              </div>
+            </center>
+          </form>
+        </div>
+      </main>
+
+    
+
+{% endblock content %}

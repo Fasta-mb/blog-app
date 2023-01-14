@@ -1,0 +1,32 @@
+{% comment %} {% extends 'main.html' %}
+
+{% block content %} {% endcomment %}
+
+     <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% comment %} <div class=""> {% endcomment %}
+            
+            <h2>Edit your profile<h2>
+            {% comment %} <div class="">
+                
+                <label for="{{prof.image.label}}">{{prof.image.label}}:</label>
+                {{prof.image}}
+            </div>
+
+            <div class="">
+                <label for="{{prof.socialname.label}}">{{prof.socialname.label}}:</label>
+                {{prof.socialname}}
+            </div>
+
+            <div class="">
+                <label for="{{prof.description.label}}">{{prof.description.label}}:</label>
+                {{prof.description}}
+            </div> {% endcomment %}
+        
+            {{prof.as_p}}
+            <button type="submit" class="btn--register">Submit</button>
+        {% comment %} </div> {% endcomment %}
+    </form>
+
+    
+{% comment %} {% endblock content %} {% endcomment %}
